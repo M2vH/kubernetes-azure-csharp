@@ -80,6 +80,16 @@ class AksLandingZone : Stack
         {
             var subnetId = landingZone.SubnetDictionary.Apply(subnetId => subnetId[aksSubnet]);
             Output<string> subnetIdString = Output.Format($"{subnetId.Apply(sn => sn)}");
+            // SubnetDictionary is ImutableDictionary<string,object>
+            // where object is a string (see comments https://github.com/M2vH/kubernetes-azure-csharp/blob/8e40b40f85a0b469af885bd9f4c14d59e0f82520/LandingZone.cs#L37-L39)
+            
+            // what's result of this??? (probably "Output<object>?" )
+            // string mysubnetIdString = subnetId.Apply(x => x).ToString();
+            
+            // or can we do sth like that at line 82 ???
+            // Output<string> subnetIdString = Output.Format($"{subnetId}"); 
+            
+            
             Pulumi.Log.Info($"SubnetId for AgentPool: {subnetIdString}");
             agentPoolProfiles.VnetSubnetID = subnetIdString;
         }
