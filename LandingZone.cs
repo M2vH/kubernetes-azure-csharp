@@ -35,6 +35,8 @@ class LandingZone
             });
 
             outputBuilder.Add(subnet.GetProperty("name").GetString(), subnetObj.Id);
+                                                             // +------------^
+                                                             // |  that's String as Object
         }
 
         // Map outputs
